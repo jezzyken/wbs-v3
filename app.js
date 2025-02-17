@@ -5,6 +5,7 @@ const connectDB = require("./config/database");
 const morganConfig = require("./config/morgan");
 const routes = require("./routes");
 require("dotenv").config();
+const path = require('path'); 
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(morganConfig);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/api", routes);
 
@@ -27,6 +29,10 @@ app.use((err, req, res, next) => {
 });
 
 connectDB();
+
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+
+global.__basedir = __dirname;
 
 process.on("unhandledRejection", (err) => {
   console.error("Unhandled Promise Rejection:", err);
