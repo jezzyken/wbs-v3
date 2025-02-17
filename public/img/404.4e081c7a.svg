@@ -1,0 +1,3 @@
+<template>
+  <v-icon size="150" color="grey lighten-1">mdi-alert-circle-outline</v-icon>
+</template>
